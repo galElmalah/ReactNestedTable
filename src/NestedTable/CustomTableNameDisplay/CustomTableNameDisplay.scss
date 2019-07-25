@@ -1,0 +1,77 @@
+@import '../../../../sass/vars.scss';
+@import '../../../../sass/mixins.scss';
+
+.nameWrapper {
+  display: flex;
+  .iconContainer {
+    width: 30px;
+    padding-top: 3px;
+    text-align: center;
+    box-sizing: border-box;
+    @include mobile {
+      width: fit-content;
+    }
+    &.empty {
+      padding-top: 0;
+      padding-right: 10px;
+    }
+  }
+  .minusIcon {
+    width: 15px;
+  }
+
+  .chevronIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #3899ec;
+    transition: transform 100ms linear;
+  }
+
+  .mobileBtn {
+    display: none;
+    min-width: 80%;
+    letter-spacing: 2px;
+    color: white;
+    background-color: #3899ec;
+    border: solid #3899ec 1px;
+    border-radius: 14px;
+    padding: 2px 5px;
+    font-weight: bolder;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  @include mobile {
+    flex-direction: column-reverse;
+    p {
+      margin: 0;
+    }
+    .chevronIcon {
+      display: none;
+    }
+
+    .mobileBtn {
+      display: flex;
+    }
+  }
+}
+
+p.required {
+  font-size: 14px;
+  color: #e8b16c;
+  margin: 0;
+  margin-left: 30px;
+  margin-top: -10px;
+  @include mobile {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}

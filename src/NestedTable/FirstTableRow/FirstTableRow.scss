@@ -1,0 +1,8 @@
+@import '../CustomTable.scss';
+
+.firstRow {
+  @extend .row;
+  border-top: none;
+  padding: 0;
+  padding-bottom: 5px;
+}

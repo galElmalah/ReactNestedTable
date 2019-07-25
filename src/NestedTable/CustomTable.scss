@@ -1,0 +1,24 @@
+@import '../../../sass/vars.scss';
+@import '../../../sass/mixins.scss';
+
+.tableWrapper {
+  width: calc(100% - 24px);
+
+  &.depth-0 {
+    border-bottom: solid 1px $line-color;
+  }
+
+  box-sizing: border-box;
+  @include mobile {
+    width: 100%;
+  }
+}
+
+@include tableDepthClasses(8);
+
+.row {
+  display: flex;
+  border-top: solid 1px $line-color;
+  padding: 10px;
+  box-sizing: border-box;
+}

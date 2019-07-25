@@ -1,0 +1,51 @@
+{
+  "name": "nested-table",
+  "version": "1.0.4",
+  "description": "Easily represent nested objects with this awesome table!",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "test": "jest",
+    "build": "tsc && echo 'Finished building NPM package'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/galElmalah/nested-table"
+  },
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "react": "^15.0.0-0 || ^16.0.0-0"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "declarative",
+    "nested",
+    "objects",
+    "compound",
+    "complex",
+    "recursive"
+  ],
+  "author": "Gal Elmalah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/galElmalah/nested-table/issues"
+  },
+  "homepage": "https://github.com/galElmalah/nested-table#readme",
+  "devDependencies": {
+    "@types/enzyme": "^3.9.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.14",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "jest": "^24.7.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
