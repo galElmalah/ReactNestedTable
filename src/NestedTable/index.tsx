@@ -14,9 +14,10 @@ import {
 import { FirstTableRow } from './FirstTableRow';
 import { CustomTableNameDisplay } from './CustomTableNameDisplay';
 import { TableColumn } from './TableColumn';
+import { NumberBooleanMap } from './types';
 
-export const TABLE_TYPES = {
-  REQUEST: 'REQUEST',
+export enum TableTypes {
+  REQUEST = 'REQUEST',
 };
 
 interface DataMember {
@@ -25,17 +26,30 @@ interface DataMember {
   doc: string;
   required?: boolean;
   readOnly?: boolean;
+  optional?: boolean;
 }
 
 
 interface NestedTableProps {
-  extractor(type: string): DataMember | undefined;
+  memberExtractor(type: string): DataMember[] | undefined;
   data: DataMember[];
+  tableDepth?: number;
+  tableType?: TableTypes;
+  title?: string;
 }
 
+interface NestedTableState {
+  openTableIndexes: NumberBooleanMap;
+  enterAnimation: boolean;
+}
 
-export const NestedTable = () => {
-  constructor(props) {
+export class NestedTable extends React.Component<NestedTableProps, NestedTableState> {
+  
+  static defaultProps = {
+    tableDepth: 0,
+  }
+
+  constructor(props: NestedTableProps) {
     super(props);
     this.state = {
       openTableIndexes: {},
@@ -43,23 +57,23 @@ export const NestedTable = () => {
     };
   }
 
-  isReadOnly = isReadOnly => {
-    return isReadOnly && this.props.tableType === TABLE_TYPES.REQUEST;
+  isReadOnly = (isReadOnly: boolean): boolean => {
+    return isReadOnly && this.props.tableType === TableTypes.REQUEST;
   };
 
   isFirstLevel = () => this.props.tableDepth === 0;
 
-  hasIndex = index => this.state.openTableIndexes.hasOwnProperty(index);
+  hasIndex = (index: number): boolean => this.state.openTableIndexes.hasOwnProperty(index);
 
-  isTableOpen = index => this.state.openTableIndexes[index];
+  isTableOpen = (index: number): boolean => this.state.openTableIndexes[index];
 
-  addTableIndex = index => {
+  addTableIndex = (index: number): void => {
     this.setState(prevState => ({
       openTableIndexes: { ...prevState.openTableIndexes, [index]: true },
     }));
   };
 
-  toggleExistingTableIndex = index => {
+  toggleExistingTableIndex = (index: number): void => {
     this.setState(prevState => ({
       openTableIndexes: {
         ...prevState.openTableIndexes,
@@ -68,7 +82,7 @@ export const NestedTable = () => {
     }));
   };
 
-  toggleTables = index => () => {
+  toggleTables = (index: number) => () => {
     if (this.hasIndex(index)) {
       this.toggleExistingTableIndex(index);
     } else {
@@ -114,17 +128,18 @@ export const NestedTable = () => {
     });
   };
 
-  getTableData = member =>
+  getTableData = (member:) =>
     isEnumType(member) ? transformEnumData(member) : member.members;
 
-  shouldRenderTable = (type, index) => {
+  shouldRenderTable = (type: string, index: number) => {
     if (!isPrimitiveType(type)) {
       const member = getMemberFromType(type);
 
       if (memberIsNotEmpty(member) && this.isTableOpen(index)) {
         const data = this.getTableData(member);
         return (
-          <CustomTable
+          <NestedTable
+            memberExtractor={this.props.memberExtractor}
             tableDepth={this.props.tableDepth + 1}
             data={data}
             tableType={this.props.tableType}
